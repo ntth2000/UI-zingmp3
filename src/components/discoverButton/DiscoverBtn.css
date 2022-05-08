@@ -1,0 +1,16 @@
+.discover-btn {
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.discover-btn:hover {
+  color: var(--purple-color);
+}
+.discover-btn__icon-right {
+  margin-left: 5px;
+  display: block;
+  font-size: 1.4rem;
+}

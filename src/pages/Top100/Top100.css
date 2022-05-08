@@ -1,0 +1,11 @@
+.top100 {
+  padding-top: 20px;
+}
+.top100__banner {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 70px;
+}
+.top100 .card {
+  padding-bottom: 30px;
+}

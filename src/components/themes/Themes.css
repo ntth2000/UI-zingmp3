@@ -1,0 +1,93 @@
+.themes {
+  position: relative;
+  color: var(--white-color);
+}
+
+.themes__heading {
+  color: var(--white-color);
+  font-size: 2.4rem;
+  text-transform: capitalize;
+  font-weight: 700;
+  margin: 0;
+  padding: 20px 30px;
+}
+.themes__main {
+  max-height: 50vh;
+  min-height: 500px;
+  padding-right: 30px;
+}
+.themes__container {
+  padding: 10px 0 20px 30px;
+}
+.themes__group {
+  width: 100%;
+}
+.themes__group-name {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin: 0 0 15px 0;
+}
+.themes__item {
+  margin-bottom: 20px;
+}
+.themes__item.active .themes__img-preview {
+  border: 1px solid var(--purple-color);
+}
+.themes__item.active .themes__img-preview::before {
+  content: "\F633";
+  color: var(--white-color);
+  position: absolute;
+  border-radius: 999px;
+  background-color: var(--purple-color);
+  font-family: "bootstrap-icons";
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  font-size: 1.4rem;
+  right: 7px;
+  bottom: 7px;
+  z-index: 1;
+  line-height: 20px;
+}
+.themes__img-preview {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  aspect-ratio: 3/2;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.themes__img {
+  width: 100%;
+  height: 100%;
+}
+.themes__item-name {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 5px 0;
+  text-transform: capitalize;
+  line-height: 1.6;
+}
+.themes__buttons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.6);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.themes__main .btn {
+  padding: 5px 20px;
+  margin: 5px 0;
+}
+.themes__img-preview:hover .themes__buttons {
+  display: flex;
+}

@@ -1,0 +1,141 @@
+.media {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  justify-content: flex-start;
+}
+
+.media.padding10x10 {
+  padding: 10px;
+}
+.media__left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.media__ordinal {
+  font-family: "Roboto", sans-serif;
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--white-color);
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--white-color);
+  margin-right: 15px;
+  opacity: 0.8;
+  position: relative;
+}
+.media__ordinal.ordinal-1 {
+  color: #4a90e2;
+  -webkit-text-stroke-color: #4a90e2;
+}
+.media__ordinal.ordinal-2 {
+  color: #50e3c2;
+  -webkit-text-stroke-color: #50e3c2;
+}
+.media__ordinal.ordinal-3 {
+  color: #e35050;
+  -webkit-text-stroke-color: #e35050;
+}
+.media__ordinal-separator {
+  width: 12px;
+  height: 2px;
+  background-color: var(--white-color);
+  opacity: 0.4;
+  margin-right: 18px;
+}
+.media__img {
+  cursor: pointer;
+  border-radius: 5px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  overflow: hidden;
+}
+.media__icon-wrapper {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.media__icon {
+  color: var(--white-color);
+  font-size: 2rem;
+}
+.media__icon:hover {
+  color: #dadada;
+}
+.media:hover .media__icon-wrapper {
+  display: flex;
+}
+.media__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  flex: 1;
+  overflow: hidden;
+}
+.media__name {
+  color: var(--white-color);
+  margin: 0;
+  line-height: 1.4;
+  font-size: 1.4rem;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.media__singers,
+.media__album {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.3rem;
+  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.media__singer {
+  text-transform: capitalize;
+  font-size: inherit;
+  font-weight: inherit;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.media__singer:hover,
+.media__album:hover {
+  text-decoration: underline;
+  color: var(--purple-color);
+}
+
+.media__duration {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding-right: 10px;
+}
+.media__actions {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+.media__actions {
+  display: none;
+}
+.media:hover .media__actions {
+  display: flex;
+}
+.media .btn-circle {
+  margin: 0 3px;
+}
+.media:hover .media__duration {
+  display: none;
+}

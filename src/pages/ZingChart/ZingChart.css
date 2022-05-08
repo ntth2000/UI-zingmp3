@@ -1,0 +1,114 @@
+.zingchart {
+  padding-bottom: 30px;
+}
+.zingchart__section {
+  margin-top: 40px;
+}
+.zingchart__header {
+  display: flex;
+  align-items: center;
+}
+.zingchart__title {
+  font-size: 4rem;
+  cursor: default;
+  font-weight: 700;
+  color: var(--white-color);
+}
+.zingchart__header-play {
+  background-color: var(--purple-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+}
+.zingchart__header-icon {
+  font-size: 2.4rem;
+  color: var(--white-color);
+}
+.zingchart .top100 .zingchart__header {
+  padding-bottom: 20px;
+}
+.zingchart__weekly {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px 10px;
+}
+.zingchart__weekly-header {
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.zingchart__weekly .zingchart__header-icon {
+  font-size: 2rem;
+}
+.zingchart__weekly-header-link {
+  font-size: 2.4rem;
+  color: var(--white-color);
+}
+.zingchart__weekly-header-link:hover {
+  color: #fe63da;
+}
+.zingchart__show-all {
+  width: 100%;
+  display: flex;
+}
+.zingchart__show-all .btn {
+  margin: auto;
+}
+.zingchart__section.weekly .zingchart__show-all {
+  margin-top: 15px;
+}
+.zingchart__section.top100 .zingchart__show-all {
+  margin-top: 20px;
+}
+.zingchart__section.weekly .zingchart__header {
+  margin-bottom: 20px;
+}
+.zingchart__top100-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+/* media */
+
+.zingchart .top100 .media {
+  padding: 10px;
+}
+.zingchart .weekly .media {
+  padding: 10px 5px;
+}
+.zingchart .media .media__left {
+  padding-right: 20px;
+}
+.zingchart .top100 .media .media__ordinal {
+  min-width: 60px;
+  text-align: center;
+}
+
+.zingchart .weekly .media .media__ordinal {
+  min-width: 32px;
+  text-align: center;
+}
+
+.zingchart .weekly .media .media__center {
+  display: none;
+}
+.zingchart .top100 .media .media__center {
+  display: flex;
+  flex-grow: 1;
+}
+.zingchart .top100 .media__left {
+  flex: 0 0 50%;
+}
+.zingchart .top100 .media__right {
+  margin-left: auto;
+}
+
+.zingchart .weekly .media .btn.like {
+  display: none;
+}
+.zingchart .media:hover {
+  border-radius: 5px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+}
