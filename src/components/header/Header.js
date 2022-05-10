@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 
 import ThemeIcon from "../../UI/icons/ThemeIcon";
 import Themes from "../themes/Themes";
@@ -93,63 +95,64 @@ const Header = () => {
         </div>
       </div>
       <div className="header__right">
-        <div className="theme header__right-item">
-          <button
-            onClick={showThemesPanel}
-            className="btn-circle is-hover-dark btn is40x40 theme-btn"
-            ref={headerThemeBtnRef}
-          >
-            <span className="btn__icon">
-              <ThemeIcon />
-            </span>
-            <span className="btn__name under user__action-name">Chủ đề</span>
-          </button>
-        </div>
-        <div className="vip header__right-item">
-          <button className="btn-circle is-hover-dark btn is40x40">
-            <span className="btn__icon">
-              <i className="bi bi-gem"></i>
-            </span>
-            <span className="btn__name under user__action-name">
-              Nâng cấp VIP
-            </span>
-          </button>
-        </div>
-        <div className="upload header__right-item">
-          <label
-            className="btn-circle is-hover-dark btn is40x40 "
-            htmlFor="song-upload"
-          >
-            <span className="btn__icon">
-              <i className="bi bi-upload"></i>
-            </span>
-            <span className="btn__name under user__action-name">Tải lên</span>
-          </label>
-        </div>
-        <div className="setting header__right-item">
-          <button className="btn-circle is-hover-dark btn is40x40">
-            <span className="btn__icon">
-              <i className="bi bi-gear"></i>
-            </span>
-            <span className="btn__name under user__action-name">Cài đặt</span>
-          </button>
-          <div className="header__dropdown menu">
-            <ul className="menu__list">
-              <li className="menu__item">
-                <span className="menu__icon">
-                  <i className="bi bi-slash-circle"></i>
-                </span>
-                Danh sách chặn
-              </li>
-              <li className="menu__item">
-                <span className="menu__icon">
-                  <i className="bi bi-badge-hd"></i>
-                </span>
-                Chất lượng nhạc
-                <span className="menu__icon-right">
-                  <i className="bi bi-chevron-right"></i>
-                </span>
-                {/* <div className="menu header__sidemenu">
+        <Tippy placement="bottom" content={"Chủ đề"}>
+          <div className="theme header__right-item">
+            <button
+              onClick={showThemesPanel}
+              className="btn-circle is-hover-dark btn is40x40 theme-btn"
+              ref={headerThemeBtnRef}
+            >
+              <span className="btn__icon">
+                <ThemeIcon />
+              </span>
+            </button>
+          </div>
+        </Tippy>
+        <Tippy placement="bottom" content="Nâng cấp VIP">
+          <div className="vip header__right-item">
+            <button className="btn-circle is-hover-dark btn is40x40">
+              <span className="btn__icon">
+                <i className="bi bi-gem"></i>
+              </span>
+            </button>
+          </div>
+        </Tippy>
+        <Tippy placement="bottom" content="Tải lên">
+          <div className="upload header__right-item">
+            <label
+              className="btn-circle is-hover-dark btn is40x40 "
+              htmlFor="song-upload"
+            >
+              <span className="btn__icon">
+                <i className="bi bi-upload"></i>
+              </span>
+            </label>
+          </div>
+        </Tippy>
+        <Tippy placement="bottom" content="Cài đặt">
+          <div className="setting header__right-item">
+            <button className="btn-circle is-hover-dark btn is40x40">
+              <span className="btn__icon">
+                <i className="bi bi-gear"></i>
+              </span>
+            </button>
+            <div className="header__dropdown menu">
+              <ul className="menu__list">
+                <li className="menu__item">
+                  <span className="menu__icon">
+                    <i className="bi bi-slash-circle"></i>
+                  </span>
+                  Danh sách chặn
+                </li>
+                <li className="menu__item">
+                  <span className="menu__icon">
+                    <i className="bi bi-badge-hd"></i>
+                  </span>
+                  Chất lượng nhạc
+                  <span className="menu__icon-right">
+                    <i className="bi bi-chevron-right"></i>
+                  </span>
+                  {/* <div className="menu header__sidemenu">
                   <ul className="sub-menu__list quality-list">
                     <li className="sub-menu__item">
                       <h4 className="sub-menu__heading">
@@ -170,56 +173,57 @@ const Header = () => {
                     </li>
                   </ul>
                 </div> */}
-              </li>
-              <li className="menu__item">
-                <span className="menu__icon">
-                  <i className="bi bi-play-circle"></i>
-                </span>
-                Giao diện
-                <span className="menu__icon-right">
-                  <i className="bi bi-chevron-right"></i>
-                </span>
-              </li>
-              <div className="menu__separation"></div>
-              <li className="menu__item bottom">
-                <span className="menu__icon">
-                  <i className="bi bi-info-circle"></i>
-                </span>
-                Giới thiệu
-              </li>
-              <li className="menu__item bottom">
-                <span className="menu__icon">
-                  <i className="bi bi-flag"></i>
-                </span>
-                Góp ý
-              </li>
-              <li className="menu__item bottom">
-                <span className="menu__icon">
-                  <i className="bi bi-telephone"></i>
-                </span>
-                Liên hệ
-              </li>
-              <li className="menu__item bottom">
-                <span className="menu__icon">
-                  <i className="bi bi-badge-ad"></i>
-                </span>
-                Quảng cáo
-              </li>
-              <li className="menu__item bottom">
-                <span className="menu__icon">
-                  <i className="bi bi-file-earmark-text"></i>
-                </span>
-                Thỏa thuận sử dụng
-              </li>
-              <li className="menu__item bottom">
-                <span className="menu__icon">
-                  <i className="bi bi-shield-check"></i>
-                </span>
-                Chính sách bảo mật
-              </li>
-            </ul>
+                </li>
+                <li className="menu__item">
+                  <span className="menu__icon">
+                    <i className="bi bi-play-circle"></i>
+                  </span>
+                  Giao diện
+                  <span className="menu__icon-right">
+                    <i className="bi bi-chevron-right"></i>
+                  </span>
+                </li>
+                <div className="menu__separation"></div>
+                <li className="menu__item bottom">
+                  <span className="menu__icon">
+                    <i className="bi bi-info-circle"></i>
+                  </span>
+                  Giới thiệu
+                </li>
+                <li className="menu__item bottom">
+                  <span className="menu__icon">
+                    <i className="bi bi-flag"></i>
+                  </span>
+                  Góp ý
+                </li>
+                <li className="menu__item bottom">
+                  <span className="menu__icon">
+                    <i className="bi bi-telephone"></i>
+                  </span>
+                  Liên hệ
+                </li>
+                <li className="menu__item bottom">
+                  <span className="menu__icon">
+                    <i className="bi bi-badge-ad"></i>
+                  </span>
+                  Quảng cáo
+                </li>
+                <li className="menu__item bottom">
+                  <span className="menu__icon">
+                    <i className="bi bi-file-earmark-text"></i>
+                  </span>
+                  Thỏa thuận sử dụng
+                </li>
+                <li className="menu__item bottom">
+                  <span className="menu__icon">
+                    <i className="bi bi-shield-check"></i>
+                  </span>
+                  Chính sách bảo mật
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        </Tippy>
         <div className="avatar header__right-item">
           <button className="btn-circle is-hover-dark btn is40x40">
             <img

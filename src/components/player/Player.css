@@ -36,11 +36,12 @@
 }
 
 .player__action-text.next-song {
+  background-color: #333;
   padding: 12px 15px 12px 12px;
   border-radius: 10px;
   width: 250px;
 }
-.action__name-next-song {
+.player__action-text.next-song .action__name-next-song {
   color: rgba(255, 255, 255, 0.5);
   font-size: 1.2rem;
   margin-bottom: 8px;
@@ -188,4 +189,7 @@
 }
 .player .media__actions {
   display: flex;
+}
+.player .media:hover {
+  background-color: unset;
 }

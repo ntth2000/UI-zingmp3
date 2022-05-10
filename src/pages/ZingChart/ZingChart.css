@@ -107,8 +107,3 @@
 .zingchart .weekly .media .btn.like {
   display: none;
 }
-.zingchart .media:hover {
-  border-radius: 5px;
-
-  background-color: rgba(255, 255, 255, 0.1);
-}

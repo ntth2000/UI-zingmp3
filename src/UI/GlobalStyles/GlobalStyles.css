@@ -172,27 +172,17 @@ a {
   align-items: center;
   justify-content: center;
 }
-.btn__name {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  width: max-content;
-  left: 50%;
-  transform: translateX(-50%);
+
+.tippy-name {
   color: var(--white-color);
   font-weight: 500;
   padding: 6px 8px;
   font-size: 1.1rem;
   border-radius: 5px;
   background-color: #333;
-  cursor: pointer;
-  opacity: 0;
-  z-index: 2;
-  display: none;
-  transition: all linear 0.15s;
 }
-.btn__name.under {
-  bottom: unset;
-  top: calc(100% + 10px);
+.tippy-content {
+  font-size: 1.1rem;
 }
 .btn-circle.is-hover-circle:hover {
   background-color: rgba(255, 255, 255, 0.1);
@@ -200,10 +190,6 @@ a {
 
 .btn.is-hover-dark:hover {
   filter: brightness(0.9);
-}
-.btn:hover .btn__name {
-  opacity: 1;
-  display: block;
 }
 
 .btn-circle.disabled {
@@ -214,20 +200,7 @@ a {
 .btn.disabled.btn-circle.is-hover-circle:hover {
   background-color: rgba(255, 255, 255, 0.03);
 }
-.btn__name::after {
-  position: absolute;
-  content: "";
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid;
-  border-color: #333 transparent transparent transparent;
-}
-.btn__name.under::after {
-  top: unset;
-  bottom: 100%;
-  border-color: transparent transparent #333 transparent;
-}
+
 .hidden-btn {
   display: none;
 }
@@ -382,7 +355,27 @@ input[type="range"]:hover::-webkit-slider-thumb {
     transform: translateX(0);
   }
 }
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #000;
+  animation: spinner 0.6s linear infinite;
+}
 /* responsive */
 /* mobile and tablet < 1024px*/
 @media (max-width: 63.9375em) {

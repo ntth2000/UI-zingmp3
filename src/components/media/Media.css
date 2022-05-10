@@ -4,9 +4,27 @@
   width: 100%;
   height: 100%;
   cursor: default;
+  border-radius: 5px;
   justify-content: flex-start;
 }
 
+.media.vip {
+  filter: brightness(0.8);
+}
+.media.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.media.active .media__icon-wrapper {
+  display: flex;
+}
+.media__icon-playing-active {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.media:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 .media.padding10x10 {
   padding: 10px;
 }
@@ -62,6 +80,7 @@
   justify-content: center;
   align-items: center;
   display: none;
+  position: relative;
   background-color: rgba(0, 0, 0, 0.25);
 }
 .media__icon {
@@ -92,6 +111,11 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.media__vip {
+  width: 26px;
+  height: 12px;
+  margin-left: 4px;
 }
 .media__singers,
 .media__album {

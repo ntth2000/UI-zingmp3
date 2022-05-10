@@ -1,27 +1,66 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const MUSIC_PLAYER = "player";
+export const MUSIC_PLAYER = "player";
 
 const initialState = JSON.parse(localStorage.getItem(MUSIC_PLAYER)) || {
   currentIndex: 0,
-  isRepeated: true,
-  isRandom: true,
+  isRepeated: false,
+  isRandom: false,
   volume: "20",
-  playingSongId: "ZZ9D7W76",
-  playlistId: "IWZ9Z0BO",
+  playingSongId: "",
+  playlistId: "ZO68OC68",
   idList: [],
+  idListAndName: [],
+  playedList: [],
+  fetchingSongStatus: {
+    isFetching: false,
+    error: null,
+  },
 };
 
 const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
+    setIdList: (state, action) => {
+      state.idList = action.payload;
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
+    },
+    setIdListAndName: (state, action) => {
+      state.idListAndName = action.payload;
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
+    },
+    playSong: (state, action) => {
+      state.playingSongId = action.payload;
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
+    },
+    setCurrentIndex: (state, action) => {
+      state.currentIndex = action.payload;
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
+    },
     next: (state) => {
-      state.currentSongNumber++;
+      if (state.currentIndex === state.idList.length - 1) {
+        state.currentIndex = 0;
+      } else {
+        state.currentIndex++;
+      }
+      state.playingSongId = state.idList[state.currentIndex];
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
     },
     prev: (state) => {
-      state.currentSongNumber--;
+      if (state.currentIndex === 0) {
+        state.currentIndex = state.idList.length - 1;
+      } else {
+        state.currentIndex--;
+      }
+      state.playingSongId = state.idList[state.currentIndex];
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
     },
+    playPlaylist: (state, action) => {
+      state.playlistId = action.payload.playlistId;
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
+    },
+
     toggleRepeat: (state) => {
       state.isRepeated = !state.isRepeated;
       localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
@@ -32,6 +71,10 @@ const playerSlice = createSlice({
     },
     adjustVolume: (state, action) => {
       state.volume = action.payload;
+      localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
+    },
+    setFetchingStatus: (state, action) => {
+      state.fetchingSongStatus = action.payload;
       localStorage.setItem(MUSIC_PLAYER, JSON.stringify(state));
     },
   },

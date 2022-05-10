@@ -29,6 +29,8 @@ const ZingChart = () => {
                 return (
                   <li className="zingchart__top100-item" key={item.encodedId}>
                     <Media
+                      index={index}
+                      playlistId={zingChartData?.RTChart.playlistId}
                       imageSize={40}
                       item={item}
                       ordinal={(index + 1).toString()}
@@ -40,6 +42,7 @@ const ZingChart = () => {
                   showAllTop100 && (
                     <li className="zingchart__top100-item" key={item.encodedId}>
                       <Media
+                        index={index}
                         imageSize={40}
                         item={item}
                         ordinal={(index + 1).toString()}
@@ -88,6 +91,8 @@ const ZingChart = () => {
                         key={item.encodedId}
                       >
                         <Media
+                          index={index}
+                          playlistId={zingChartData.weekChart.vn.playlistId}
                           imageSize={40}
                           item={item}
                           ordinal={(index + 1).toString()}
@@ -126,6 +131,8 @@ const ZingChart = () => {
                         key={item.encodedId}
                       >
                         <Media
+                          index={index}
+                          playlistId={zingChartData.weekChart.us.playlistId}
                           imageSize={40}
                           item={item}
                           ordinal={(index + 1).toString()}
@@ -164,6 +171,8 @@ const ZingChart = () => {
                         key={item.encodedId}
                       >
                         <Media
+                          index={index}
+                          playlistId={zingChartData.weekChart.korea.playlistId}
                           imageSize={40}
                           item={item}
                           ordinal={(index + 1).toString()}

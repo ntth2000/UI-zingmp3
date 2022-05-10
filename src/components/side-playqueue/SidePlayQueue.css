@@ -5,9 +5,9 @@
   right: 0;
   bottom: 90px;
   width: 330px;
-  z-index: 10;
+  z-index: 12;
   display: flex;
-  transition: transform linear 0.3s;
+  transition: transform ease-out 0.5s;
   flex-direction: column;
   background-color: var(--side-play-queue-bg);
 }
@@ -42,18 +42,6 @@
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-.side-play-queue__item {
-  border-radius: 5px;
-}
-.side-play-queue__item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-.side-play-queue__item.active {
-  background-color: var(--purple-color);
-}
-.side-play-queue__item.active:hover {
-  background-color: var(--purple-color);
-}
 .side-play-queue__clock .btn__icon,
 .side-play-queue__more .btn__icon {
   font-size: 1.5rem;
@@ -105,6 +93,26 @@
   width: fit-content;
   margin-left: 4px;
 }
+.side-play-queue__item.played {
+  filter: brightness(0.8);
+}
+.side-play-queue__item.played:hover {
+  filter: unset;
+}
 .side-play-queue .media {
   padding: 8px;
+}
+.side-play-queue .media__center {
+  display: none;
+}
+.side-play-queue .media__duration,
+.side-play-queue .media .play-with-lyrics {
+  display: none;
+}
+.side-play-queue .media.active {
+  background-color: var(--purple-color);
+}
+
+.side-play-queue .media.active:hover {
+  background-color: var(--purple-color);
 }

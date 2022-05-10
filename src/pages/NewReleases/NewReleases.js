@@ -30,6 +30,8 @@ const NewReleases = () => {
                     imageSize={40}
                     item={item}
                     ordinal={(index + 1).toString()}
+                    playlistId={newReleasesData.encodedId}
+                    index={index}
                   />
                 </li>
               ))}

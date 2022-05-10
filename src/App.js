@@ -10,12 +10,13 @@ import MyMusic from "./pages/MyMusic/MyMusic";
 import ZingChart from "./pages/ZingChart/ZingChart";
 import Top100 from "./pages/Top100/Top100";
 import NewReleases from "./pages/NewReleases/NewReleases";
+import Tippy from "@tippyjs/react/headless";
+import "tippy.js/dist/tippy.css";
 function App() {
   const handleScrollingContent = (e) => {
     const header = document.querySelector(".header");
     header.classList.toggle("scrolling", e.target.scrollTop > 0);
   };
-
   return (
     <GlobalStyles>
       <div className="App">
@@ -24,16 +25,6 @@ function App() {
           <SidePlayQueue />
           <div className="content-container">
             <Header />
-            {/* <button
-              style={{
-                backgroundColor: "white",
-                cursor: "pointer",
-                width: "100px",
-                height: "20px",
-              }}
-            >
-              Toast
-            </button> */}
             <div className="content" onScroll={handleScrollingContent}>
               <Routes>
                 <Route path="/" element={<Explore />} />

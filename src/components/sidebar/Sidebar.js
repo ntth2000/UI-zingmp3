@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 import "./Sidebar.css";
 const Sidebar = () => {
   return (
-    <div className="sidebar">
+    <aside className="sidebar">
       <div className="logo">
         <NavLink activeClassName="active" className="logo__wrapper" to="/">
           <img
@@ -151,12 +153,13 @@ const Sidebar = () => {
           <div className="sidebar__library">
             <div className="sidebar__library-header">
               <h3 className="sidebar__library-heading">Thư viện</h3>
-              <div className="sidebar__library-editor btn btn-circle is-hover-circle is26x26">
-                <span className="btn__icon">
-                  <i className="bi bi-pencil"></i>
-                </span>
-                <span className="btn__name">Chỉnh sửa</span>
-              </div>
+              <Tippy placement="top" content="Chỉnh sửa">
+                <div className="sidebar__library-editor btn btn-circle is-hover-circle is26x26">
+                  <span className="btn__icon">
+                    <i className="bi bi-pencil"></i>
+                  </span>
+                </div>
+              </Tippy>
             </div>
             <ul className="sidebar__library-list">
               <li className="sidebar__library-item">
@@ -212,7 +215,7 @@ const Sidebar = () => {
         <span className="nav__text"></span>
         Tạo playlist mới
       </div>
-    </div>
+    </aside>
   );
 };
 

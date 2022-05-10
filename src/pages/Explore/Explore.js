@@ -61,7 +61,7 @@ const Explore = () => {
             <div className="explore__zingchart-header section__header">
               <h2>
                 <Link
-                  to="/zingchart"
+                  to="/zing-chart"
                   className="explore__zingchart-header-link"
                 >
                   {homeData?.zingchart?.title}
@@ -81,14 +81,15 @@ const Explore = () => {
                       imageSize={60}
                       item={item}
                       ordinal={(index + 1).toString()}
+                      index={index}
                     />
                   </li>
                 ))}
               </ul>
               <div className="explore__zing-chart-btn">
-                <a href="/zing-chart" className="btn btn-3">
+                <Link to="/zing-chart" className="btn btn-3">
                   Xem thêm
-                </a>
+                </Link>
               </div>
             </div>
           </div>
