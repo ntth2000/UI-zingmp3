@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -6,6 +6,7 @@ import "tippy.js/dist/tippy.css";
 import { playerActions } from "../../store/playerSlice";
 import { uiActions } from "../../store/uiSlice";
 import "./Media.css";
+
 const Media = ({
   item,
   playlistId: mediaPlaylistId = null,
@@ -15,6 +16,35 @@ const Media = ({
   ordinal = false,
   index = 0,
 }) => {
+  function toast(msg = "You got a massage!") {
+    const app = document.querySelector(".App");
+
+    // const prevToast = app.querySelector(".toast") || null;
+    // if (!!prevToast) {
+    //   prevToast.parentNode.removeChild(prevToast);
+    // }
+    app.innerHTML += `<div class="toast">
+      <p class="toast__msg">${msg}</p>
+      <span class="toast__close">
+        <i class="bi bi-x-lg"></i>
+      </span>
+    </div>`;
+    console.log("toast  running....");
+    const toast = app.querySelector(".toast");
+    const toastClose = toast.querySelector(".toast__close");
+
+    const slideOutTimeoutId = setTimeout(function () {
+      toast.classList.add("slideOut");
+    }, 4000);
+    const removeToastTimeoutId = setTimeout(function () {
+      toast.parentNode.removeChild(toast);
+    }, 5000);
+    toastClose.onclick = () => {
+      toast.parentNode.removeChild(toast);
+      clearTimeout(slideOutTimeoutId);
+      clearTimeout(removeToastTimeoutId);
+    };
+  }
   const dispatch = useDispatch();
   const {
     playingSongId,
@@ -57,7 +87,7 @@ const Media = ({
       dispatch(uiActions.setPlaying(false));
       audio.currentTime = 0;
       dispatch(playerActions.setCurrentIndex(index));
-      dispatch(uiActions.setCurrentTime(0));
+
       setTimeout(() => {
         playAudio();
       }, 300);
@@ -67,7 +97,6 @@ const Media = ({
         dispatch(uiActions.setPlaying(false));
         audio.currentTime = 0;
         dispatch(playerActions.setCurrentIndex(index));
-        dispatch(uiActions.setCurrentTime(0));
         setTimeout(() => {
           audio.play();
         }, 300);
@@ -77,12 +106,18 @@ const Media = ({
     }
     dispatch(playerActions.playSong(item.encodeId));
   };
-
+  const handleLikeBtn = () => {
+    console.log("liekbtn clicked");
+    toast("Chức năng này chưa được phát triển");
+  };
   return (
     <div
       className={`media padding${paddingSize}x${paddingSize} ${
         item && idList[currentIndex] === item.encodeId ? "active" : ""
       } ${item.streamingStatus === 2 ? "vip" : ""}`}
+      onClick={() => {
+        console.log("media clicked");
+      }}
     >
       <div className="media__left">
         {ordinal && (
@@ -170,6 +205,7 @@ const Media = ({
           <Tippy placement="top" content={"Thêm vào thư viện"}>
             <div
               className={`btn-circle is-hover-circle btn is${iconSize}x${iconSize} like`}
+              onClick={handleLikeBtn}
             >
               <span className="btn__icon">
                 <i className="bi bi-heart"></i>

@@ -3,19 +3,36 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 
 import "./Card.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { playerActions } from "../../store/playerSlice";
 import { Link } from "react-router-dom";
 import { uiActions } from "../../store/uiSlice";
 const Card = ({ item, showDesc, showArtists }) => {
+  const { isPlaying } = useSelector((state) => state.ui);
+  const { idList, playingSongId } = useSelector((state) => state.player);
   const { encodeId, title, thumbnail, sortDescription, artists } = item;
   const cardPlayBtn = useRef();
   const dispatch = useDispatch();
   useEffect(() => {
+    const playBtn = document.querySelector(".player__action.play");
+    const audio = document.querySelector(".player__audio");
+    async function playAudio() {
+      if (audio.paused && !isPlaying) {
+        return audio.play();
+      }
+    }
+    async function pauseAudio() {
+      if (!audio.paused && isPlaying) {
+        audio.pause();
+      }
+    }
     cardPlayBtn.current.onclick = () => {
+      isPlaying && pauseAudio();
+      dispatch(uiActions.setPlaying(false));
       dispatch(playerActions.playPlaylist({ playlistId: encodeId }));
       dispatch(playerActions.setCurrentIndex(0));
       dispatch(uiActions.setCurrentTime(0));
+      audio.currentTime = 0;
     };
   });
   return (

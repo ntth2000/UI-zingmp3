@@ -31,10 +31,6 @@ const SidePlayQueue = () => {
       .then((res) => {
         setPlaylist(res.data);
         setQueue(res.data.song.items);
-        console.log(
-          "local: ",
-          JSON.parse(localStorage.getItem(MUSIC_PLAYER)).idList
-        );
 
         const idList = res.data.song.items.map((item) => item.encodeId);
         dispatch(playerActions.setIdList(idList));
@@ -43,6 +39,7 @@ const SidePlayQueue = () => {
           name: item.title,
         }));
         dispatch(playerActions.setIdListAndName(idListAndName));
+        dispatch(playerActions.playSong(idList[currentIndex]));
       })
       .catch((error) => console.log(error));
   }, [playlistId]);
