@@ -3,15 +3,12 @@ import Header from "./components/header/Header";
 import Player from "./components/player/Player";
 import Sidebar from "./components/sidebar/Sidebar";
 import GlobalStyles from "./UI/GlobalStyles/GlobalStyles";
-import Toast from "./components/toast/Toast";
 import SidePlayQueue from "./components/side-playqueue/SidePlayQueue";
 import Explore from "./pages/Explore/Explore";
 import MyMusic from "./pages/MyMusic/MyMusic";
 import ZingChart from "./pages/ZingChart/ZingChart";
 import Top100 from "./pages/Top100/Top100";
 import NewReleases from "./pages/NewReleases/NewReleases";
-import Tippy from "@tippyjs/react/headless";
-import "tippy.js/dist/tippy.css";
 function App() {
   const handleScrollingContent = (e) => {
     const header = document.querySelector(".header");

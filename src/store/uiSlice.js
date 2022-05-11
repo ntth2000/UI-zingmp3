@@ -3,7 +3,6 @@ const UI_SETTINGS = "ui-settings";
 const initialState = JSON.parse(localStorage.getItem(UI_SETTINGS)) || {
   showSidePlaylist: false,
   isPlaying: false,
-  currentTime: 0,
 };
 
 const uiSlice = createSlice({
@@ -12,10 +11,6 @@ const uiSlice = createSlice({
   reducers: {
     toggleSidePlaylist: (state) => {
       state.showSidePlaylist = !state.showSidePlaylist;
-      localStorage.setItem(UI_SETTINGS, JSON.stringify(state));
-    },
-    setCurrentTime: (state, action) => {
-      state.currentTime = action.payload;
       localStorage.setItem(UI_SETTINGS, JSON.stringify(state));
     },
     // toggleMusic: (state) => {

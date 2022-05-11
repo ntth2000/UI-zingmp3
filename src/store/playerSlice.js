@@ -8,7 +8,7 @@ const initialState = JSON.parse(localStorage.getItem(MUSIC_PLAYER)) || {
   isRandom: false,
   volume: "20",
   playingSongId: "",
-  playlistId: "ZO68OC68",
+  playlistId: "",
   idList: [],
   idListAndName: [],
   playedList: [],

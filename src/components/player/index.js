@@ -8,7 +8,6 @@ import "tippy.js/dist/tippy.css";
 import "./Player.css";
 import { playerActions } from "../../store/playerSlice";
 import { uiActions } from "../../store/uiSlice";
-import useHttp from "../../hooks/useHttp";
 const Player = () => {
   const $ = document.querySelector.bind(document);
   const dispatch = useDispatch();
@@ -21,34 +20,50 @@ const Player = () => {
     playlistId,
     idList,
   } = useSelector((state) => state.player);
-  const { isPlaying } = useSelector((state) => state.ui);
+  const { isPlaying, currentTime } = useSelector((state) => state.ui);
   const [song, setSong] = useState();
   const [nextSong, setNextSong] = useState();
-  const [currentTime, setCurrentTime] = useState(0);
-  const { isLoading, error, sendRequest: fetchSong } = useHttp();
-  dispatch(
-    playerActions.setFetchingStatus({
-      isFetching: isLoading,
-      error,
-    })
-  );
+
   useEffect(() => {
-    fetchSong(
-      {
-        url: `http://localhost:8800/song/${playingSongId}`,
-      },
-      setSong
-    );
+    const fetchSong = async () => {
+      console.log("player fetchsong");
+      dispatch(
+        playerActions.setFetchingStatus({
+          isFetching: true,
+          error: null,
+        })
+      );
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/song/${playingSongId}`
+        );
+        setSong(res.data);
+        dispatch(
+          playerActions.setFetchingStatus({
+            isFetching: false,
+            error: null,
+          })
+        );
+      } catch (error) {
+        dispatch(
+          playerActions.setFetchingStatus({
+            isFetching: false,
+            error,
+          })
+        );
+      }
+    };
+    fetchSong();
   }, [playingSongId]);
 
   useEffect(() => {
     const nextSongId = idList[currentIndex + 1];
-    fetchSong(
-      {
-        url: `http://localhost:8800/song/${nextSongId}`,
-      },
-      setNextSong
-    );
+    axios
+      .get(`http://localhost:8800/song/${nextSongId}`)
+      .then((res) => {
+        setNextSong(res.data);
+      })
+      .catch((error) => console.log(error));
   }, [currentIndex]);
 
   useEffect(() => {
@@ -82,8 +97,8 @@ const Player = () => {
     };
     audio.onended = () => {
       dispatch(uiActions.setPlaying(false));
-
-      setCurrentTime(0);
+      audio.volume = 0;
+      dispatch(uiActions.setCurrentTime(0));
       console.log("audio on ended set current time");
       if (isRepeated) {
         playAudio();
@@ -100,12 +115,13 @@ const Player = () => {
 
       setTimeout(() => {
         audio.play();
+        audio.volume = volume / 100;
       }, 300);
     };
     prevBtn.onclick = () => {
       pauseAudio();
       dispatch(uiActions.setPlaying(false));
-      setCurrentTime(0);
+      dispatch(uiActions.setCurrentTime(0));
       dispatch(playerActions.prev());
 
       setTimeout(() => {
@@ -145,7 +161,7 @@ const Player = () => {
     audio.ontimeupdate = function () {
       if (this.duration) {
         progress.value = (this.currentTime / this.duration) * 100;
-        setCurrentTime(Math.floor(audio.currentTime));
+        dispatch(uiActions.setCurrentTime(Math.floor(audio.currentTime)));
       }
     };
   }, []);
@@ -401,5 +417,3 @@ const Player = () => {
     </div>
   );
 };
-
-export default Player;
