@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const UI_SETTINGS = "ui-settings";
-const initialState = JSON.parse(localStorage.getItem(UI_SETTINGS)) || {
+const initialState = {
   showSidePlaylist: false,
   isPlaying: false,
 };
@@ -11,7 +10,6 @@ const uiSlice = createSlice({
   reducers: {
     toggleSidePlaylist: (state) => {
       state.showSidePlaylist = !state.showSidePlaylist;
-      localStorage.setItem(UI_SETTINGS, JSON.stringify(state));
     },
     // toggleMusic: (state) => {
     //   state.isPlaying = !state.isPlaying;
@@ -27,7 +25,6 @@ const uiSlice = createSlice({
     // },
     setPlaying: (state, action) => {
       state.isPlaying = action.payload;
-      localStorage.setItem(UI_SETTINGS, JSON.stringify(state));
     },
   },
 });

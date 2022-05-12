@@ -11,6 +11,9 @@
   max-width: 240px;
   background-color: rgba(255, 255, 255, 0.05);
 }
+.full-height .sidebar {
+  height: 100%;
+}
 .logo {
   margin-left: 28px;
   min-height: 70px;
@@ -88,6 +91,9 @@
   border-top: 1px solid var(--border-color);
   z-index: 2;
   height: 50px;
+}
+.full-height .sidebar__scrollbar-wrapper {
+  bottom: 54px;
 }
 .sidebar__scrollbar-wrapper {
   overflow-y: scroll;
@@ -196,6 +202,9 @@
   display: flex;
   align-items: center;
   border-top: 1px solid var(--border-color);
+}
+.full-height .sidebar__create-playlist {
+  bottom: 0;
 }
 .sidebar__create-playlist-icon {
   font-size: 2rem;

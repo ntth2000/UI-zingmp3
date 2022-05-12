@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import React, { useEffect, useRef } from "react";
 import "./Modal.css";
 const Modal = ({ children, target }) => {
@@ -16,12 +17,13 @@ const Modal = ({ children, target }) => {
     <div className="modal" target={target} id={`#modal-${target}`}>
       <div className="modal__overlay" href="#"></div>
       <div className="modal__content">
-        <button className="btn modal__close is-hover-dark">
-          <span className="btn__icon">
-            <i className="bi bi-x-lg"></i>
-          </span>
-          <span className="btn__name">Đóng</span>
-        </button>
+        <Tippy content="Đóng" placement="top">
+          <button className="btn modal__close is-hover-dark">
+            <span className="btn__icon">
+              <i className="bi bi-x-lg"></i>
+            </span>
+          </button>
+        </Tippy>
         {children}
       </div>
     </div>

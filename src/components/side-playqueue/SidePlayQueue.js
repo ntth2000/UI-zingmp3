@@ -1,21 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 
 import { MUSIC_PLAYER, playerActions } from "../../store/playerSlice";
 import Media from "../media/Media";
 import "./SidePlayQueue.css";
+import useHttp from "../../hooks/useHttp";
 const SidePlayQueue = () => {
   const dispatch = useDispatch();
 
+  // const { isLoading, error, sendRequest } = useHttp();
   const [playlist, setPlaylist] = useState();
   const [queue, setQueue] = useState([]);
   const { playlistId, idList, isRandom, currentIndex, playingSongId } =
     useSelector((state) => state.player);
   const { showSidePlaylist } = useSelector((state) => state.ui);
-
+  const [albumLink, setAlbumLink] = useState("");
   function shuffleQueue(array) {
     const copiedArray = [...array];
     for (let i = copiedArray.length - 1; i > 0; i--) {
@@ -30,11 +33,18 @@ const SidePlayQueue = () => {
       .get(`http://localhost:8800/playlist/${playlistId}`)
       .then((res) => {
         setPlaylist(res.data);
-        setQueue(res.data.song.items);
+        const aliasTitle = res.data.link.split("/")[2];
+        const link = "/album/" + aliasTitle + "/" + res.data.encodeId;
+        setAlbumLink(link);
+        const filteredVIPsongs = res.data.song.items.filter(
+          (item) => item.streamingStatus !== 2
+        );
 
-        const idList = res.data.song.items.map((item) => item.encodeId);
+        setQueue(filteredVIPsongs);
+
+        const idList = filteredVIPsongs.map((item) => item.encodeId);
         dispatch(playerActions.setIdList(idList));
-        const idListAndName = res.data.song.items.map((item) => ({
+        const idListAndName = filteredVIPsongs.map((item) => ({
           id: item.encodeId,
           name: item.title,
         }));
@@ -149,12 +159,12 @@ const SidePlayQueue = () => {
                   </h4>
                   <p className="side-play-queue__separation-desc">
                     Từ playlist
-                    <a
-                      href=""
+                    <Link
+                      to={albumLink}
                       className="side-play-queue__separation-playlist-name"
                     >
                       {playlist?.title}
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </>

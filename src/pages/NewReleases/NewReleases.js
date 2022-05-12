@@ -1,18 +1,63 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import Media from "../../components/media/Media";
+import Error from "../../components/error/Error";
+import useHttp from "../../hooks/useHttp";
+import { useDispatch, useSelector } from "react-redux";
+import { playerActions } from "../../store/playerSlice";
+import { uiActions } from "../../store/uiSlice";
 const NewReleases = () => {
+  const dispatch = useDispatch();
+  const { isPlaying } = useSelector((state) => state.ui);
+  const { playlistId } = useSelector((state) => state.player);
+
   const [newReleasesData, setNewReleasesData] = useState();
-  useEffect(function () {
-    axios
-      .get("http://localhost:8800/home/new-releases")
-      .then((res) => setNewReleasesData(res.data))
-      .catch((error) => console.log(error));
+  const { isFetching, error, sendRequest: fetchData } = useHttp();
+  const albumPlayBtn = useRef();
+
+  useEffect(() => {
+    fetchData(
+      {
+        url: "http://localhost:8800/home/new-releases",
+      },
+      setNewReleasesData
+    );
+  }, []);
+  useEffect(() => {
+    const playBtn = document.querySelector(".player__action.play");
+    const audio = document.querySelector(".player__audio");
+    const albumPlayBtn = document.querySelector(
+      ".new-releases .zingchart__header-play"
+    );
+    async function playAudio() {
+      if (audio.paused && !isPlaying) {
+        return audio.play();
+      }
+    }
+    async function pauseAudio() {
+      if (!audio.paused && isPlaying) {
+        audio.pause();
+      }
+    }
+    console.log(albumPlayBtn);
+    // albumPlayBtn.onclick = () => {
+    //   if (newReleasesData.encodedId !== playlistId) {
+    //     isPlaying && pauseAudio();
+    //     dispatch(uiActions.setPlaying(false));
+    //     dispatch(
+    //       playerActions.playPlaylist({ playlistId: newReleasesData.encodedId })
+    //     );
+    //     dispatch(playerActions.setCurrentIndex(0));
+    //     audio.currentTime = 0;
+    //   } else {
+    //     playBtn.click();
+    //   }
+    // };
   }, []);
   return (
     <div className="new-releases zingchart">
-      {newReleasesData && (
+      {isFetching && <span className="spinner"></span>}
+      {error && <Error />}
+      {!isFetching && !error && newReleasesData && (
         <div className="zingchart__section top100">
           <header className="zingchart__header">
             <h2 className="zingchart__title">{newReleasesData.title}</h2>
