@@ -51,6 +51,9 @@ a {
   background-repeat: no-repeat;
   background-image: url(https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme-background/zma.svg);
 }
+.main-content.full-height {
+  height: 100vh;
+}
 .content-container {
   flex: 1;
   position: relative;
@@ -141,6 +144,10 @@ a {
   width: 32px;
   height: 32px;
 }
+.is35x35 {
+  width: 35px;
+  height: 35px;
+}
 .is40x40 {
   width: 40px;
   height: 40px;
@@ -164,6 +171,10 @@ a {
 .is120x120 {
   width: 120px;
   height: 120px;
+}
+.is300x300 {
+  width: 300px;
+  height: 300px;
 }
 .btn__icon {
   width: 100%;

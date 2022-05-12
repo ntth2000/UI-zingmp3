@@ -6,6 +6,8 @@ import "tippy.js/dist/tippy.css";
 import { playerActions } from "../../store/playerSlice";
 import { uiActions } from "../../store/uiSlice";
 import "./Media.css";
+import iconPlayingGif from "../../assets/icon-playing-gif.gif";
+import MediaSinger from "./mediaSinger/MediaSinger";
 
 const Media = ({
   item,
@@ -55,7 +57,6 @@ const Media = ({
     fetchingSongStatus,
   } = useSelector((state) => state.player);
   const { isPlaying } = useSelector((state) => state.ui);
-
   const duration = item
     ? `${Math.floor(item.duration / 60)
         .toString()
@@ -119,73 +120,77 @@ const Media = ({
         console.log("media clicked");
       }}
     >
-      <div className="media__left">
-        {ordinal && (
-          <>
-            <span className={`media__ordinal ordinal-${ordinal}`}>
-              {ordinal}
-            </span>
-            <span className="media__ordinal-separator"></span>
-          </>
-        )}
-        <div
-          onClick={mediaHandle}
-          className={`media__img is${imageSize}x${imageSize}`}
-          style={{
-            backgroundImage: `url(${
-              item
-                ? item.thumbnail
-                : "https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/cover/6/7/2/6/6726852445831142a43c99695e470d3b.jpg"
-            })`,
-          }}
-        >
-          <div className="media__icon-wrapper">
-            {item &&
-              idList[currentIndex] === item.encodeId &&
-              fetchingSongStatus.isFetching && (
-                <span className="spinner"></span>
-              )}
-
-            {item &&
-            idList[currentIndex] === item.encodeId &&
-            !fetchingSongStatus.isFetching &&
-            isPlaying ? (
-              <img
-                src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
-                className="media__icon-playing-active"
-              />
-            ) : (
-              <span className="media__icon">
-                <i className="bi bi-play-fill"></i>
+      {item && (
+        <div className="media__left">
+          {ordinal && (
+            <>
+              <span className={`media__ordinal ordinal-${ordinal}`}>
+                {ordinal}
               </span>
-            )}
+              <span className="media__ordinal-separator"></span>
+            </>
+          )}
+          <div
+            onClick={mediaHandle}
+            className={`media__img is${imageSize}x${imageSize}`}
+            style={{
+              backgroundImage: `url(${
+                item
+                  ? item.thumbnail
+                  : "https://photo-resize-zmp3.zadn.vn/w240_r1x1_webp/cover/6/7/2/6/6726852445831142a43c99695e470d3b.jpg"
+              })`,
+            }}
+          >
+            <div className="media__icon-wrapper">
+              {item &&
+                idList[currentIndex] === item.encodeId &&
+                fetchingSongStatus.isFetching && (
+                  <span className="spinner"></span>
+                )}
+
+              {item &&
+              idList[currentIndex] === item.encodeId &&
+              !fetchingSongStatus.isFetching &&
+              isPlaying ? (
+                <img
+                  src={iconPlayingGif}
+                  className="media__icon-playing-active"
+                />
+              ) : (
+                <span className="media__icon">
+                  <i className="bi bi-play-fill"></i>
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="media__info">
+            <h4 className="media__name">
+              {item
+                ? item.title
+                : "Danh sách phátNghe gần đây Go! DK Tiếp theo Từ playlistNhững bài hát hay nhất của BigBang"}
+              {item.streamingStatus === 2 && (
+                <img
+                  className="media__vip"
+                  src="https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.6.24/static/media/vip-label.3dd6ac7e.svg"
+                  alt="VIP"
+                />
+              )}
+            </h4>
+            <p className="media__singers">
+              {item.artists ? (
+                item?.artists.map((artist, index) => (
+                  <>
+                    <MediaSinger artist={artist} />
+                    {index < item.artists.length - 1 ? ", " : ""}
+                  </>
+                ))
+              ) : (
+                <span>{item.artistsNames}</span>
+              )}
+            </p>
           </div>
         </div>
-        <div className="media__info">
-          <h4 className="media__name">
-            {item
-              ? item.title
-              : "Danh sách phátNghe gần đây Go! DK Tiếp theo Từ playlistNhững bài hát hay nhất của BigBang"}
-            {item.streamingStatus === 2 && (
-              <img
-                className="media__vip"
-                src="https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.6.24/static/media/vip-label.3dd6ac7e.svg"
-                alt="VIP"
-              />
-            )}
-          </h4>
-          <p className="media__singers">
-            {item?.artists.map((artist, index) => (
-              <>
-                <a className="media__singer" href="">
-                  {artist.name}
-                </a>
-                {index < item.artists.length - 1 ? ", " : ""}
-              </>
-            ))}
-          </p>
-        </div>
-      </div>
+      )}
       <div className="media__center">
         <a href="" className="media__album">
           {item ? item?.album?.title : ""}

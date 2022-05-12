@@ -9,7 +9,10 @@ import MyMusic from "./pages/MyMusic/MyMusic";
 import ZingChart from "./pages/ZingChart/ZingChart";
 import Top100 from "./pages/Top100/Top100";
 import NewReleases from "./pages/NewReleases/NewReleases";
+import Album from "./pages/Album/Album";
+import { useSelector } from "react-redux";
 function App() {
+  const { playlistId } = useSelector((state) => state.player);
   const handleScrollingContent = (e) => {
     const header = document.querySelector(".header");
     header.classList.toggle("scrolling", e.target.scrollTop > 0);
@@ -17,9 +20,9 @@ function App() {
   return (
     <GlobalStyles>
       <div className="App">
-        <div className="main-content">
+        <div className={`main-content${!playlistId ? " full-height" : ""}`}>
           <Sidebar />
-          <SidePlayQueue />
+          {playlistId && <SidePlayQueue />}
           <div className="content-container">
             <Header />
             <div className="content" onScroll={handleScrollingContent}>
@@ -29,11 +32,12 @@ function App() {
                 <Route path="/zing-chart" element={<ZingChart />} />
                 <Route path="/top100" element={<Top100 />} />
                 <Route path="/new-releases" element={<NewReleases />} />
+                <Route path="/album/:aliasTitle/:albumId" element={<Album />} />
               </Routes>
             </div>
           </div>
         </div>
-        <Player />
+        {playlistId && <Player />}
       </div>
     </GlobalStyles>
   );

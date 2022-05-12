@@ -5,7 +5,7 @@ import "tippy.js/dist/tippy.css";
 import "./Sidebar.css";
 const Sidebar = () => {
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar`}>
       <div className="logo">
         <NavLink activeClassName="active" className="logo__wrapper" to="/">
           <img

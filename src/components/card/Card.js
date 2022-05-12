@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { playerActions } from "../../store/playerSlice";
 import { Link } from "react-router-dom";
 import { uiActions } from "../../store/uiSlice";
+import MediaSinger from "../media/mediaSinger/MediaSinger";
 const Card = ({ item, showDesc, showArtists }) => {
   const { isPlaying } = useSelector((state) => state.ui);
-  const { idList, playingSongId } = useSelector((state) => state.player);
+  const { playlistId } = useSelector((state) => state.player);
   const { encodeId, title, thumbnail, sortDescription, artists } = item;
   const cardPlayBtn = useRef();
   const dispatch = useDispatch();
@@ -27,17 +28,24 @@ const Card = ({ item, showDesc, showArtists }) => {
       }
     }
     cardPlayBtn.current.onclick = () => {
-      isPlaying && pauseAudio();
-      dispatch(uiActions.setPlaying(false));
-      dispatch(playerActions.playPlaylist({ playlistId: encodeId }));
-      dispatch(playerActions.setCurrentIndex(0));
-      dispatch(uiActions.setCurrentTime(0));
-      audio.currentTime = 0;
+      if (encodeId !== playlistId) {
+        isPlaying && pauseAudio();
+        dispatch(uiActions.setPlaying(false));
+        dispatch(playerActions.playPlaylist({ playlistId: encodeId }));
+        dispatch(playerActions.setCurrentIndex(0));
+        audio.currentTime = 0;
+      } else {
+        playBtn.click();
+      }
     };
-  });
+  }, []);
+
+  const aliasTitle = item.link.split("/")[2];
+
+  const link = "/album/" + aliasTitle + "/" + item.encodeId;
   return (
     <div className="card">
-      <Link to="" className="card__top zoom-in">
+      <Link to={link} className="card__top zoom-in">
         <div className="card__img-wrapper">
           <img src={thumbnail} className="card__img" alt={title} />
         </div>
@@ -67,25 +75,28 @@ const Card = ({ item, showDesc, showArtists }) => {
         </div>
       </Link>
       <h5 className="card__title">
-        <a href="" className="card__title-link">
+        <Link to={link} className="card__title-link">
           {title}
-        </a>
+        </Link>
       </h5>
       {showDesc && <p className="card__desc">{sortDescription}</p>}
       {showArtists && (
         <p className="card__singers">
-          {artists.map((artist, index) => {
-            if (index < 3) {
-              return (
-                <span>
-                  <a className="card__singer" href="">
-                    {artist.name}
-                  </a>
-                  {index < 2 ? ", " : ","}
-                </span>
-              );
-            }
-          })}
+          {artists ? (
+            artists.map((artist, index) => {
+              if (index < 3) {
+                return (
+                  <span>
+                    <MediaSinger artist={artist} />
+
+                    {index < 2 ? ", " : ","}
+                  </span>
+                );
+              }
+            })
+          ) : (
+            <span>{item.artistsNames}</span>
+          )}
           ...
         </p>
       )}

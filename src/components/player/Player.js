@@ -9,6 +9,7 @@ import "./Player.css";
 import { playerActions } from "../../store/playerSlice";
 import { uiActions } from "../../store/uiSlice";
 import useHttp from "../../hooks/useHttp";
+import MediaSinger from "../media/mediaSinger/MediaSinger";
 const Player = () => {
   const $ = document.querySelector.bind(document);
   const dispatch = useDispatch();
@@ -25,21 +26,22 @@ const Player = () => {
   const [song, setSong] = useState();
   const [nextSong, setNextSong] = useState();
   const [currentTime, setCurrentTime] = useState(0);
-  const { isLoading, error, sendRequest: fetchSong } = useHttp();
-  dispatch(
-    playerActions.setFetchingStatus({
-      isFetching: isLoading,
-      error,
-    })
-  );
-  useEffect(() => {
-    fetchSong(
-      {
-        url: `http://localhost:8800/song/${playingSongId}`,
-      },
-      setSong
-    );
-  }, [playingSongId]);
+  const { isFetching, error, sendRequest: fetchSong } = useHttp();
+
+  // useEffect(() => {
+  //   fetchSong(
+  //     {
+  //       url: `http://localhost:8800/song/${playingSongId}`,
+  //     },
+  //     setSong
+  //   );
+  //   // if (error) {
+  //   //   const nextBtn = $(".player__action.next");
+  //   //   nextBtn.click();
+  //   // }
+  //   console.log("isFetching: ", isFetching);
+  //   console.log("error: ", error);
+  // }, [playingSongId]);
 
   useEffect(() => {
     const nextSongId = idList[currentIndex + 1];
@@ -50,6 +52,51 @@ const Player = () => {
       setNextSong
     );
   }, [currentIndex]);
+  useEffect(() => {
+    const fetchSong = async () => {
+      console.log("player fetchsong");
+      dispatch(
+        playerActions.setFetchingStatus({
+          isFetching: true,
+          error: null,
+        })
+      );
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/song/${playingSongId}`
+        );
+        if (res.data) {
+          setSong(res.data);
+          dispatch(
+            playerActions.setFetchingStatus({
+              isFetching: false,
+              error: null,
+            })
+          );
+        }
+      } catch (error) {
+        dispatch(
+          playerActions.setFetchingStatus({
+            isFetching: false,
+            error,
+          })
+        );
+        const nextBtn = $(".player__action.next");
+        nextBtn.click();
+      }
+    };
+    fetchSong();
+  }, [playingSongId]);
+
+  // useEffect(() => {
+  //   const nextSongId = idList[currentIndex + 1];
+  //   axios
+  //     .get(`http://localhost:8800/song/${nextSongId}`)
+  //     .then((res) => {
+  //       setNextSong(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, [currentIndex]);
 
   useEffect(() => {
     //handle events
@@ -98,9 +145,9 @@ const Player = () => {
       console.log("nextbtn clicked set current time");
       dispatch(playerActions.next());
 
-      setTimeout(() => {
-        audio.play();
-      }, 300);
+      // setTimeout(() => {
+      //   audio.play();
+      // }, 300);
     };
     prevBtn.onclick = () => {
       pauseAudio();
@@ -108,9 +155,9 @@ const Player = () => {
       setCurrentTime(0);
       dispatch(playerActions.prev());
 
-      setTimeout(() => {
-        audio.play();
-      }, 300);
+      // setTimeout(() => {
+      //   audio.play();
+      // }, 300);
     };
     audio.onplay = () => {
       dispatch(uiActions.setPlaying(true));
@@ -179,14 +226,16 @@ const Player = () => {
                   : "Danh sách phátNghe gần đây Go! DK Tiếp theo Từ playlistNhững bài hát hay nhất của BigBang"}
               </h4>
               <p className="media__singers">
-                {song?.artists.map((artist, index) => (
-                  <>
-                    <a className="media__singer" href="">
-                      {artist.name}
-                    </a>
-                    {index < song.artists.length - 1 ? ", " : ""}
-                  </>
-                ))}
+                {song?.artists ? (
+                  song?.artists.map((artist, index) => (
+                    <>
+                      <MediaSinger artist={artist} />
+                      {index < song.artists.length - 1 ? ", " : ""}
+                    </>
+                  ))
+                ) : (
+                  <span>{song?.artistsNames ? song.artistsNames : ""}</span>
+                )}
               </p>
             </div>
             <div className="media__actions">
@@ -265,16 +314,17 @@ const Player = () => {
                               "Danh sách phátNghe gần đây Go! DK Tiếp theo Từ playlistNhững bài hát hay nhất của BigBang"}
                           </h4>
                           <p className="media__singers">
-                            {nextSong?.artists.map((artist, index) => (
-                              <>
-                                <a className="media__singer" href="">
-                                  {artist.name}
-                                </a>
-                                {index < nextSong.artists.length - 1
-                                  ? ", "
-                                  : ""}
-                              </>
-                            ))}
+                            {nextSong?.artists &&
+                              nextSong?.artists.map((artist, index) => (
+                                <>
+                                  <a className="media__singer" href="">
+                                    {artist.name}
+                                  </a>
+                                  {index < nextSong.artists.length - 1
+                                    ? ", "
+                                    : ""}
+                                </>
+                              ))}
                           </p>
                         </div>
                       </div>
@@ -394,6 +444,7 @@ const Player = () => {
         </div>
       </div>
       <audio
+        // muted="muted"
         src={song?.streaming["128"]}
         volume={volume}
         className="player__audio"

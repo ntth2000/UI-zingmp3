@@ -417,3 +417,4 @@ const Player = () => {
     </div>
   );
 };
+export default Player;
